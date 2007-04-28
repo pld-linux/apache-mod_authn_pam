@@ -1,10 +1,10 @@
 %define		mod_name	authn_pam
 %define 	apxs		/usr/sbin/apxs
 Summary:	This is the PAM authentication module for Apache 2.2
-Summary(es):	Este módulo proporciona autenticación PAM para Apache 2.2
-Summary(pl):	Modu³ uwierzytelnienia PAM dla Apache
-Summary(pt_BR):	Este módulo provê autenticação PAM para o Apache
-Name:		apache-mod_%{mod_name}
+Summary(es.UTF-8):	Este mÃ³dulo proporciona autenticaciÃ³n PAM para Apache 2.2
+Summary(pl.UTF-8):	ModuÅ‚ uwierzytelnienia PAM dla Apache
+Summary(pt_BR.UTF-8):	Este mÃ³dulo provÃª autenticaÃ§Ã£o PAM para o Apache
+Name:		apache-mod_authn_pam
 Version:	0.0.1
 Release:	1
 Epoch:		1
@@ -12,9 +12,9 @@ License:	Apache Group License
 Group:		Networking/Daemons
 Source0:	mod_%{mod_name}.tar.gz
 # Source0-md5:	d7e2601f226c0319e3178f00406537b7
-Source1:	apache-mod_authn_pam.conf
-Source2:	httpd.pam
-Patch0:		apache-mod_authn_pam-AuthnPAMService.patch
+Source1:	%{name}.conf
+Source2:	%{name}.pamd
+Patch0:		%{name}-AuthnPAMService.patch
 URL:		http://cvs.sourceforge.net/viewcvs.py/mod-auth/mod_authn_pam/
 BuildRequires:	%{apxs}
 BuildRequires:	apache-devel >= 2.2
@@ -22,8 +22,8 @@ BuildRequires:	pam-devel
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	apache >= 2.2
 Requires:	apache(modules-api) = %apache_modules_api
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Provides:	apache-mod_auth_pam
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
 %define		_sysconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)
@@ -32,16 +32,16 @@ Provides:	apache-mod_auth_pam
 This is an authentication module for Apache that allows you to
 authenticate HTTP clients using PAM (pluggable authentication module).
 
-%description -l es
-Este módulo permite autenticar clientes HTTP usando el directorio PAM.
+%description -l es.UTF-8
+Este mÃ³dulo permite autenticar clientes HTTP usando el directorio PAM.
 
-%description -l pl
-To jest modu³ uwierzytelnienia dla Apache pozwalaj±cy na
-uwierzytelnianie klientów HTTP przez PAM.
+%description -l pl.UTF-8
+To jest moduÅ‚ uwierzytelnienia dla Apache pozwalajÄ…cy na
+uwierzytelnianie klientÃ³w HTTP przez PAM.
 
-%description -l pt_BR
-Este módulo permite que você autentique clientes HTTP usando o
-diretório PAM.
+%description -l pt_BR.UTF-8
+Este mÃ³dulo permite que vocÃª autentique clientes HTTP usando o
+diretÃ³rio PAM.
 
 %prep
 %setup -q -n mod_%{mod_name}
@@ -49,7 +49,7 @@ diretório PAM.
 
 %build
 cd src
-%{apxs} -c mod_%{mod_name}.c	-o mod_%{mod_name}.la	 -lpam
+%{apxs} -c mod_%{mod_name}.c -o mod_%{mod_name}.la -lpam
 
 %install
 cd src

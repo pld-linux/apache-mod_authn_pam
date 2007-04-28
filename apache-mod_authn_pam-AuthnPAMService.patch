@@ -1,0 +1,39 @@
+--- mod_authn_pam.orig/src/mod_authn_pam.c	2003-11-11 10:16:17.000000000 +0100
++++ mod_authn_pam/src/mod_authn_pam.c	2006-04-26 19:05:21.000000000 +0200
+@@ -92,6 +92,7 @@
+ 
+ typedef struct {
+     int fail_delay;		/* fail delay in ms -- needs library support */
++    const char *service;	/* service name to use for PAM authentication */
+ }      authn_pam_dir_config;
+ 
+ static
+@@ -114,6 +115,7 @@
+     (authn_pam_dir_config *) apr_palloc(p, sizeof(authn_pam_dir_config));
+ 
+     new->fail_delay = 0;	/* 0 ms */
++    new->service = pam_servicename;	/* httpd */
+     return new;
+ }
+ 
+@@ -125,6 +127,11 @@
+ 	"number of micro seconds to wait after failed authentication "
+ 	"attempt. (default is 0.)"),
+ 
++    AP_INIT_TAKE1("AuthnPAMService",
++	ap_set_string_slot, (void *) APR_OFFSETOF(authn_pam_dir_config, service),
++	OR_AUTHCFG,
++	"PAM service name to use for authentication. (default is httpd.)"),
++
+     {NULL}
+ };
+ 
+@@ -216,7 +223,7 @@
+     userinfo.name = (char*)user;
+     userinfo.pw = (char*)password;
+ 
+-    if ((res = pam_start(pam_servicename,
++    if ((res = pam_start(conf->service,
+ 			 userinfo.name,
+ 			 &conv_info,
+ 			 &pamh)) != PAM_SUCCESS) {

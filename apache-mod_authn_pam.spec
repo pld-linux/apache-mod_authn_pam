@@ -8,7 +8,7 @@ Name:		apache-mod_authn_pam
 Version:	0.0.1
 Release:	1
 Epoch:		1
-License:	Apache Group License
+License:	Apache
 Group:		Networking/Daemons
 Source0:	mod_%{mod_name}.tar.gz
 # Source0-md5:	d7e2601f226c0319e3178f00406537b7

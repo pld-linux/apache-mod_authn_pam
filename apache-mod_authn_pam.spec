@@ -9,7 +9,7 @@ Version:	0.0.1
 Release:	1
 Epoch:		1
 License:	Apache
-Group:		Networking/Daemons
+Group:		Networking/Daemons/HTTP
 Source0:	mod_%{mod_name}.tar.gz
 # Source0-md5:	d7e2601f226c0319e3178f00406537b7
 Source1:	%{name}.conf

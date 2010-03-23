@@ -10,8 +10,8 @@ Release:	1
 Epoch:		1
 License:	Apache
 Group:		Networking/Daemons/HTTP
-Source0:	mod_%{mod_name}.tar.gz
-# Source0-md5:	d7e2601f226c0319e3178f00406537b7
+Source0:	mod_%{mod_name}.tar.bz2
+# Source0-md5:	c0bcce844da1df21ede8ee9a6cfb33e6
 Source1:	%{name}.conf
 Source2:	%{name}.pamd
 Patch0:		%{name}-AuthnPAMService.patch

@@ -52,10 +52,10 @@ cd src
 %{apxs} -c mod_%{mod_name}.c -o mod_%{mod_name}.la -lpam
 
 %install
-cd src
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_pkglibdir},/etc/pam.d,%{_sysconfdir}/httpd.conf}
 
+cd src
 install .libs/mod_*.so $RPM_BUILD_ROOT%{_pkglibdir}
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/52_mod_authn_pam.conf
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/httpd

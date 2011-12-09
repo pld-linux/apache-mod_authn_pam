@@ -26,7 +26,7 @@ Provides:	apache-mod_auth_pam
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_pkglibdir	%(%{apxs} -q LIBEXECDIR 2>/dev/null)
-%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)
+%define		_sysconfdir	%(%{apxs} -q SYSCONFDIR 2>/dev/null)/conf.d
 
 %description
 This is an authentication module for Apache that allows you to
@@ -53,12 +53,12 @@ cd src
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_pkglibdir},/etc/pam.d,%{_sysconfdir}/httpd.conf}
+install -d $RPM_BUILD_ROOT{%{_pkglibdir},/etc/pam.d,%{_sysconfdir}}
 
 cd src
-install .libs/mod_*.so $RPM_BUILD_ROOT%{_pkglibdir}
-install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf/52_mod_authn_pam.conf
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/httpd
+install -p .libs/mod_*.so $RPM_BUILD_ROOT%{_pkglibdir}
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/52_mod_authn_pam.conf
+cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/pam.d/httpd
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -73,6 +73,6 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/httpd.conf/*_mod_authn_pam.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/*_mod_authn_pam.conf
 %attr(755,root,root) %{_pkglibdir}/*.so
 %config(noreplace) /etc/pam.d/httpd

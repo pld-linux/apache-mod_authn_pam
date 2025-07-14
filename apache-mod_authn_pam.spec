@@ -45,7 +45,7 @@ diretório PAM.
 
 %prep
 %setup -q -n mod_%{mod_name}
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 cd src
